@@ -1,1 +1,21 @@
+input_datetime:
 
+ziel_datum:
+name: Ziel Datum
+has_date: true
+has_time: false
+
+ziel_datum_ende:
+name: Ziel Datum Ende
+has_date: true
+has_time: false
+
+start_zeit:
+name: Start Zeit
+has_date: false
+has_time: true
+
+end_zeit:
+name: End Zeit
+has_date: false
+has_time: true
