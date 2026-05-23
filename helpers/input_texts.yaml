@@ -1,0 +1,13 @@
+input_text:
+
+stats_person_a_fruehschicht:
+name: Statistik Person A Frühschicht
+
+stats_person_a_spaetschicht:
+name: Statistik Person A Spätschicht
+
+stats_person_a_nachtschicht:
+name: Statistik Person A Nachtschicht
+
+stats_person_b_special:
+name: Statistik Person B Special
