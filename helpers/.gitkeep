@@ -1,1 +1,37 @@
+input_select:
+planung_person:
+name: Planung Person
+options:
+- Person_A
+- Person_B
+- Child_A
+- Child_B
+- Family
+
+planung_schichten_person_a:
+name: Schichten Person A
+options:
+- Fruehschicht
+- Spaetschicht
+- Nachtschicht
+- Urlaub
+- Krank
+
+planung_schichten_person_b:
+name: Schichten Person B
+options:
+- F2
+- F4
+- F5
+- Special
+- Urlaub
+- Krank
+
+schicht_auswahl:
+name: Familienereignisse
+options:
+- School
+- Appointment
+- Vacation
+- Family_Event
 
