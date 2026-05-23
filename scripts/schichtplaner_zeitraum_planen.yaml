@@ -1,0 +1,36 @@
+schichtplaner_zeitraum_planen:
+alias: "Schichtplaner: Zeitraum planen"
+sequence:
+- variables:
+t_start: "{{ states('input_datetime.ziel_datum') }}"
+t_end: "{{ states('input_datetime.ziel_datum_ende') }}"
+v_person: "{{ states('input_select.planung_person') }}"
+v_schicht: >-
+{% if v_person == 'Person_A' %}
+{{ states('input_select.planung_schichten_person_a') }}
+{% elif v_person == 'Person_B' %}
+{{ states('input_select.planung_schichten_person_b') }}
+{% else %}
+{{ states('input_select.schicht_auswahl') }}
+{% endif %}
+v_anzahl: >-
+{% set d1 = as_datetime(t_start) if as_datetime(t_start) is not
+none else now() %}
+{% set d2 = as_datetime(t_end) if as_datetime(t_end) is not none
+else d1 %}
+{{ ((d2.date() - d1.date()).days + 1) | int }}
+- repeat:
+count: "{{ v_anzahl }}"
+sequence:
+- action: script.schichtplaner_final
+data:
+tag: >-
+{% set d = as_datetime(t_start) if as_datetime(t_start) is
+not none else now() %}
+{{ (d + timedelta(days=repeat.index - 1)).strftime('%Y-%m%d') }}
+person: "{{ v_person }}"
+schicht: "{{ v_schicht }}"
+start_zeit: "{{ states('input_datetime.start_zeit') }}"
+end_zeit: "{{ states('input_datetime.end_zeit') }}"
+- delay: "00:00:02"
+- action: script.schichtstatistik_aktualisieren
