@@ -1,0 +1,17 @@
+schichtplaner_final:
+alias: "Schichtplaner: Final"
+sequence:
+- action: calendar.create_event
+target:
+entity_id: >-
+{% if person == 'Person_A' %}
+calendar.person_a
+{% elif person == 'Person_B' %}
+calendar.person_b
+{% else %}
+calendar.family
+{% endif %}
+data:
+summary: "{{ schicht }}"
+start_date_time: "{{ tag }} {{ start_zeit }}"
+end_date_time: "{{ tag }} {{ end_zeit }}"
