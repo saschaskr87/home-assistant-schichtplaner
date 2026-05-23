@@ -1,0 +1,211 @@
+# Troubleshooting Guide
+
+## 🇩🇪 Geisterbuchungen
+
+### Problem
+
+Versteckte Dropdownwerte konnten sichtbare Benutzerauswahlen überschreiben.
+
+Dadurch wurden teilweise falsche Schichten im falschen Kalender gespeichert.
+
+### Ursache
+
+Das Hauptskript griff direkt auf globale Dropdown-Helfer zu:
+
+```yaml
+{{ states('input_select.schicht_auswahl') }}
+```
+
+Unsichtbare Dashboard-Elemente behielten ihren alten Zustand im Hintergrund.
+
+### Lösung
+
+Einbau einer dynamischen Jinja2-Weiche:
+
+```yaml
+{% if v_person == 'Person_A' %}
+{{ states('input_select.planung_schichten_person_a') }}
+{% endif %}
+```
+
+---
+
+## 🇬🇧 Ghost Bookings
+
+### Problem
+
+Hidden dropdown values were able to overwrite visible user selections.
+
+This caused incorrect shifts to be written into the wrong calendar.
+
+### Cause
+
+The main script directly accessed global dropdown helpers:
+
+```yaml
+{{ states('input_select.schicht_auswahl') }}
+```
+
+Hidden dashboard elements kept their old internal state.
+
+### Solution
+
+Implementation of a dynamic Jinja2 routing switch:
+
+```yaml
+{% if v_person == 'Person_A' %}
+{{ states('input_select.planung_schichten_person_a') }}
+{% endif %}
+```
+
+---
+
+# 🇩🇪 Reload-Probleme
+
+### Problem
+
+Home Assistant behandelte Reloads teilweise wie echte Zustandsänderungen.
+
+Dadurch entstanden:
+
+* doppelte Termine
+* falsche Statistikwerte
+* erneute Verarbeitung alter States
+
+### Lösung
+
+Triggervergleich mittels:
+
+```yaml
+{{ trigger.from_state is not none and
+trigger.to_state.state != trigger.from_state.state }}
+```
+
+Zusätzlich:
+
+* künstliche Delays
+* Statistik-Synchronisierung
+* Failover-Automationen
+
+---
+
+# 🇬🇧 Reload Problems
+
+### Problem
+
+Home Assistant sometimes treated reloads as real state changes.
+
+This caused:
+
+* duplicate events
+* incorrect statistics
+* reprocessing of old states
+
+### Solution
+
+Trigger comparison using:
+
+```yaml
+{{ trigger.from_state is not none and
+trigger.to_state.state != trigger.from_state.state }}
+```
+
+Additionally:
+
+* artificial delays
+* statistics synchronization
+* failover automations
+
+---
+
+# 🇩🇪 Statistikprobleme
+
+### Problem
+
+Textbasierte Kalenderfilter erzeugten instabile Ergebnisse.
+
+Probleme entstanden durch:
+
+* Emojis
+* unterschiedliche Schreibweisen
+* Kalenderänderungen
+* Umlaute
+
+### Lösung
+
+Migration auf zeitbasierte Statistiklogik.
+
+Beispiel:
+
+```yaml
+selectattr('start','search','T06:00')
+```
+
+---
+
+# 🇬🇧 Statistics Problems
+
+### Problem
+
+Text-based calendar filters produced unstable results.
+
+Problems were caused by:
+
+* emojis
+* naming differences
+* calendar modifications
+* umlauts
+
+### Solution
+
+Migration to time-based statistics logic.
+
+Example:
+
+```yaml
+selectattr('start','search','T06:00')
+```
+
+---
+
+# 🇩🇪 Kalender-Synchronisationsprobleme
+
+### Problem
+
+Externe Kalenderänderungen wurden teilweise verzögert erkannt.
+
+### Lösung
+
+Nächtliche Synchronisations-Automation:
+
+```yaml
+at: "03:00:00"
+```
+
+Zusätzlich:
+
+* Reload-Synchronisierung
+* Kalender-Cache-Verzögerungen
+* persistente Statistik-Helfer
+
+---
+
+# 🇬🇧 Calendar Synchronization Problems
+
+### Problem
+
+External calendar changes were sometimes detected with delays.
+
+### Solution
+
+Nightly synchronization automation:
+
+```yaml
+at: "03:00:00"
+```
+
+Additionally:
+
+* reload synchronization
+* calendar cache delays
+* persistent statistics helpers
