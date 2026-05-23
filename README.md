@@ -6,6 +6,20 @@ Modular multi-user shift and household planner for Home Assistant.
 
 ---
 
+# Dashboard Preview
+
+## Kalenderübersicht / Calendar Overview
+
+![Calendar Overview](images/dashboard_shift_calendar_overview.png)
+
+---
+
+## Schichtauswahl / Shift Selection
+
+![Shift Selection](images/dashboard_person_a_shift_selection.png)
+
+---
+
 # Projektübersicht / Project Overview
 
 🇩🇪
